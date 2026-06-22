@@ -27,6 +27,15 @@ function About() {
             </p>
           </Reveal>
           <Reveal delay={200}>
+            <p className="mt-5 text-lg sm:text-xl leading-relaxed text-slate-400 tx text-justify">
+              J'ai mis ces compétences à l'épreuve lors de mon stage. J'y ai développé des composants en
+              {" "}<span className="text-white font-medium">React, Next.js et TypeScript</span>, corrigé des problèmes
+              d'affichage en production et découvert le fonctionnement d'une application professionnelle, du conteneur
+              Docker jusqu'à la base de données. Cette expérience m'a appris autant sur le code que sur le travail en
+              équipe et les exigences d'un produit réel.
+            </p>
+          </Reveal>
+          <Reveal delay={260}>
             <a
               href="https://www.univ-spn.fr"
               target="_blank"
