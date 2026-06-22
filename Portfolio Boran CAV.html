@@ -145,7 +145,20 @@
   .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: 99px; white-space: nowrap; background: rgba(255,255,255,0.04); border: 1px solid var(--line); color: #d4d4d4; font-size: 12px; font-weight: 400; letter-spacing: 0.2em; margin-bottom: 30px; }
   .hero-eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; box-shadow: 0 0 12px #fff; animation: pulse 2.4s ease-in-out infinite; }
   .hero-name { font-weight: 400; line-height: 0.96; letter-spacing: -0.035em; color: #fff; font-size: clamp(60px, 13vw, 156px); }
-  .hero-name-accent { background: linear-gradient(180deg, #ffffff 0%, #ffffff 38%, #6a6a6a 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  /* dégradé appliqué au conteneur ET à chaque lettre (les lettres sont des spans
+     inline-block pour l'animation ; sans ça, le clip du parent ne les remplit pas
+     sur certains navigateurs et le texte devient invisible). */
+  .hero-name-accent, .hero-name-accent .letter-in {
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 38%, #6a6a6a 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+  /* repli : si background-clip:text n'est pas supporté, on garde un texte clair visible */
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hero-name-accent, .hero-name-accent .letter-in {
+      -webkit-text-fill-color: #e6e6e6; color: #e6e6e6; background: none;
+    }
+  }
   .hero-title { display: inline-flex; align-items: center; gap: 16px; margin-top: 30px; opacity: 0; animation: fadeUp 0.9s ease forwards 1.1s; }
   .hero-title-line { width: 44px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7)); }
   .hero-title-text { font-size: clamp(17px, 3vw, 25px); font-weight: 400; color: #b9b9b9; letter-spacing: 0.01em; }
