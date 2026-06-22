@@ -101,7 +101,7 @@ function AnimatedText({ text, baseDelay = 0, step = 0.045, className = "" }) {
 // direction flow along themselves via stroke-dasharray/dashoffset, with a
 // gentle opacity pulse. Sober white-on-near-black to match the theme.
 function FloatingPaths({ position }) {
-  const paths = Array.from({ length: 18 }, (_, i) => ({
+  const paths = Array.from({ length: 14 }, (_, i) => ({
     id: i,
     d:
       `M-${380 - i * 5 * position} -${189 + i * 6}` +
