@@ -1,6 +1,6 @@
 // Nav, Hero, and root App. Multi-vue : chaque rubrique a son propre espace (routage par hash).
 
-const { Reveal, AnimatedText, Background, Icon, About, Skills, Projects, Education, Contact } = window;
+const { Reveal, AnimatedText, Typewriter, Background, Icon, About, Skills, Projects, Education, Contact } = window;
 
 function useHashRoute() {
   const [hash, setHash] = React.useState(window.location.hash);
@@ -93,7 +93,18 @@ function Hero() {
 
         <div className="hero-title">
           <span className="hero-title-line"></span>
-          <span className="hero-title-text">Étudiant BUT Informatique</span>
+          <Typewriter
+            className="hero-title-text"
+            text={[
+              "Étudiant en BUT Informatique",
+              "Rigoureux & autonome",
+              "Curieux & polyvalent",
+            ]}
+            speed={75}
+            deleteSpeed={35}
+            delay={1800}
+            loop={true}
+          />
         </div>
 
         <div className="hero-actions">
