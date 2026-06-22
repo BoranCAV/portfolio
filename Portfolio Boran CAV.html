@@ -134,8 +134,8 @@
   .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.08); }
   .nav-burger { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid var(--line); color: #fff; cursor: pointer; }
   @media (min-width: 860px) { .nav-burger { display: none; } }
-  .nav-mobile { display: flex; flex-direction: column; gap: 2px; max-height: 0; overflow: hidden; background: rgba(6,6,6,0.96); backdrop-filter: blur(16px); transition: max-height 0.35s ease, padding 0.35s ease; padding: 0 16px; border-bottom: 1px solid transparent; }
-  .nav-mobile.is-open { max-height: 420px; padding: 8px 16px 16px; border-bottom-color: var(--line); }
+  .nav-mobile { display: flex; flex-direction: column; gap: 2px; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; padding: 0 16px; border-bottom: 1px solid transparent; }
+  .nav-mobile.is-open { max-height: 420px; padding: 8px 16px 16px; border-bottom-color: var(--line); background: rgba(6,6,6,0.96); backdrop-filter: blur(16px); }
   .nav-mobile a { padding: 13px 14px; border-radius: 10px; color: #c4c4c4; text-decoration: none; font-weight: 400; }
   .nav-mobile a.is-active { color: #fff; background: rgba(255,255,255,0.08); }
 
