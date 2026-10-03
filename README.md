@@ -36,7 +36,7 @@ src/
   sections.jsx      Sections : À propos, Compétences, Projets, Formation, Contact
   proof.jsx         Détail des preuves par compétence
   app.jsx           Navigation, Hero et composant racine
-uploads/            CV, rapport de stage, images
+uploads/            CV et rapport de stage (PDF)
 ```
 
 ## Lancer en local
