@@ -1,132 +1,46 @@
-// Nav, Hero, and root App. Multi-vue : chaque rubrique a son propre espace (routage par hash).
+// Navigation et routage par hash : chaque rubrique est une page à part.
 
-const { Reveal, AnimatedText, Typewriter, Background, Icon, About, Skills, Projects, Education, Contact } = window;
+const { useHashRoute, Icon, SECTIONS, Hero, About, Skills, Projects, Education, Contact, ProofPage, ProjectPage } = window;
 
-function useHashRoute() {
-  const [hash, setHash] = React.useState(window.location.hash);
-  React.useEffect(() => {
-    const on = () => setHash(window.location.hash);
-    window.addEventListener("hashchange", on);
-    return () => window.removeEventListener("hashchange", on);
-  }, []);
-  return hash;
-}
+const VIEWS = { accueil: Hero, "a-propos": About, competences: Skills, projets: Projects, formation: Education, contact: Contact };
 
-const NAV = [
-  { id: "accueil", label: "Accueil", route: "#/" },
-  { id: "a-propos", label: "À propos", route: "#/a-propos" },
-  { id: "competences", label: "Compétences", route: "#/competences" },
-  { id: "projets", label: "Projets", route: "#/projets" },
-  { id: "formation", label: "Formation", route: "#/formation" },
-  { id: "contact", label: "Contact", route: "#/contact" },
-];
-
-// Quelle vue pour un hash donné
 function routeToView(hash) {
-  const h = (hash || "").replace(/^#/, "");
-  if (h === "" || h === "/" || h === "/accueil") return "accueil";
-  if (h === "/a-propos") return "a-propos";
-  if (h === "/competences") return "competences";
-  if (h === "/projets") return "projets";
-  if (h === "/formation") return "formation";
-  if (h === "/contact") return "contact";
-  return "accueil";
+  const s = SECTIONS.find((x) => x.route === hash);
+  return s ? s.id : "accueil";
 }
 
-function Nav({ current }) {
+function Nav({ active }) {
   const [open, setOpen] = React.useState(false);
-
-  // ferme le menu mobile quand on change de page
+  const route = useHashRoute();
+  React.useEffect(() => setOpen(false), [route]);
   React.useEffect(() => {
-    setOpen(false);
-  }, [current]);
+    if (!open) return;
+    const onKey = (e) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <header className="nav nav-solid">
-      <div className="nav-inner">
-        <a href="#/" className="brand">
-          <span className="brand-mark">BC</span>
-          <span className="brand-name">Boran CAV</span>
-        </a>
-
-        <nav className="nav-links">
-          {NAV.map((n) => (
-            <a key={n.id} href={n.route} className={current === n.id ? "is-active" : ""}>
-              {n.label}
-            </a>
+    <header className="nav">
+      <div className="nav-pill glass">
+        <a className="nav-brand" href="#/" aria-label="Boran CAV, accueil"><b>BC</b>Boran CAV</a>
+        <nav className="nav-links" aria-label="Rubriques">
+          {SECTIONS.map((s) => (
+            <a key={s.id} href={s.route} className={active === s.id ? "is-active" : ""}
+               aria-current={active === s.id ? "page" : undefined}>{s.label}</a>
           ))}
         </nav>
-
-        <button className="nav-burger" onClick={() => setOpen((o) => !o)} aria-label="Menu">
-          <Icon name={open ? "close" : "menu"} className="w-6 h-6" />
+        <button className="nav-menu" onClick={() => setOpen((o) => !o)}
+                aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={open}>
+          <Icon name={open ? "x" : "list"} />
         </button>
       </div>
-
-      <div className={`nav-mobile ${open ? "is-open" : ""}`}>
-        {NAV.map((n) => (
-          <a key={n.id} href={n.route} onClick={() => setOpen(false)} className={current === n.id ? "is-active" : ""}>
-            {n.label}
-          </a>
+      <div className={"nav-sheet glass" + (open ? " is-open" : "")}>
+        {SECTIONS.map((s) => (
+          <a key={s.id} href={s.route} className={active === s.id ? "is-active" : ""}>{s.label}<Icon name="arrow-right" /></a>
         ))}
       </div>
     </header>
-  );
-}
-
-function Hero() {
-  return (
-    <section id="accueil" className="hero">
-      <div className="hero-inner">
-        <div className="hero-eyebrow">
-          <span className="hero-eyebrow-dot"></span>
-          <AnimatedText text="PORTFOLIO" baseDelay={0.1} step={0.05} className="tracking-[0.4em]" />
-        </div>
-
-        <h1 className="hero-name font-display">
-          <span className="block">
-            <AnimatedText text="Boran" baseDelay={0.35} />
-          </span>
-          <span className="block hero-name-accent">
-            <AnimatedText text="CAV" baseDelay={0.7} />
-          </span>
-        </h1>
-
-        <p className="hero-title">
-          Étudiant en <span className="text-white">3ᵉ année de BUT Informatique</span> à l'IUT de Villetaneuse.
-          Stage en développement web chez ParkHit : <span className="text-white">React, Next.js, TypeScript</span> en production.
-        </p>
-
-        <div className="hero-actions">
-          <a href="#/competences" className="btn-primary">
-            Mes compétences
-            <Icon name="arrow-up-right" className="w-4 h-4" />
-          </a>
-          <a href="#/projets" className="btn-ghost">
-            Voir mes projets
-          </a>
-          <a href="uploads/CV-Boran-CAV.pdf" download className="btn-ghost">
-            <Icon name="download" className="w-4 h-4" />
-            Télécharger mon CV
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="footer">
-      <div className="wrap flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span className="font-display text-white font-semibold">Boran CAV</span>
-        <span className="text-sm text-slate-500">© 2026 · Portfolio · BUT Informatique</span>
-        <div className="flex gap-3">
-          <a href="https://github.com/BoranCAV" target="_blank" rel="noopener noreferrer" className="footer-icon"><Icon name="github" className="w-5 h-5" /></a>
-          <a href="https://www.linkedin.com/in/boran-cav-3971a6333/" target="_blank" rel="noopener noreferrer" className="footer-icon"><Icon name="linkedin" className="w-5 h-5" /></a>
-          <a href="mailto:cav.boran@gmail.com" className="footer-icon"><Icon name="mail" className="w-5 h-5" /></a>
-        </div>
-      </div>
-    </footer>
   );
 }
 
@@ -136,56 +50,23 @@ function App() {
   const skill = m ? (window.SKILLS_DATA || []).find((s) => s.id === m[1]) : null;
   const mp = route.match(/^#\/projet\/(.+)$/);
   const project = mp ? (window.PROJECTS || []).find((p) => p.id === mp[1]) : null;
+  const view = routeToView(route);
+  const pageKey = skill ? "c-" + skill.id : project ? "p-" + project.id : view;
 
-  // remonte en haut à chaque changement de page
+  // Chaque changement de page repart du haut, et le ruban 3D change de pose.
   React.useEffect(() => {
     window.scrollTo(0, 0);
-  }, [route]);
+    const i = skill || project ? SECTIONS.length + 1 : Math.max(0, SECTIONS.findIndex((s) => s.id === view) + 1);
+    window.dispatchEvent(new CustomEvent("viewchange", { detail: i }));
+  }, [pageKey]);
 
-  const backToSkills = () => {
-    window.location.hash = "#/competences";
-  };
-  const backToProjects = () => {
-    window.location.hash = "#/projets";
-  };
-
-  if (skill) {
-    return (
-      <React.Fragment>
-        <Background />
-        <window.ProofPage skill={skill} onBack={backToSkills} />
-      </React.Fragment>
-    );
-  }
-
-  if (project) {
-    return (
-      <React.Fragment>
-        <Background />
-        <window.ProjectPage project={project} onBack={backToProjects} />
-      </React.Fragment>
-    );
-  }
-
-  const view = routeToView(route);
-  const views = {
-    accueil: <Hero />,
-    "a-propos": <About />,
-    competences: <Skills />,
-    projets: <Projects />,
-    formation: <Education />,
-    contact: <Contact />,
-  };
-  const isHome = view === "accueil";
-
+  const View = VIEWS[view];
   return (
     <React.Fragment>
-      <Background />
-      <Nav current={view} />
-      <main key={view} className={`view ${isHome ? "view-home" : "view-page"}`}>
-        {views[view]}
-      </main>
-      {!isHome && <Footer />}
+      <Nav active={skill ? "competences" : project ? "projets" : view} />
+      {skill ? <ProofPage key={pageKey} skill={skill} /> :
+       project ? <ProjectPage key={pageKey} project={project} /> :
+       <main id="contenu" key={pageKey} className="view"><View /></main>}
     </React.Fragment>
   );
 }
