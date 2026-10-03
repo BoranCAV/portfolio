@@ -43,7 +43,7 @@
     --white: #ffffff;
     --txt: #e6e6e6;
     --muted: #8f8f8f;
-    --muted-2: #6b6b6b;
+    --muted-2: #8a8a8a;
   }
 
   * { box-sizing: border-box; }
@@ -59,6 +59,7 @@
   #root { display: flex; flex-direction: column; min-height: 100vh; }
   main.view { flex: 1 0 auto; }
   ::selection { background: rgba(255,255,255,0.85); color: #000; }
+  :focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
 
   /* ----------------------- LAYOUT ----------------------- */
   .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
@@ -108,7 +109,7 @@
   @media (min-width: 768px) { .view-page .section { padding-top: 138px; } }
 
   /* justified body text */
-  .tx { text-align: justify; text-justify: inter-word; hyphens: auto; -webkit-hyphens: auto; }
+  .tx { text-align: left; text-wrap: pretty; }
 
   /* ----------------------- PILLS / EYEBROWS ----------------------- */
   .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 7px 15px; border-radius: 99px; white-space: nowrap;
@@ -159,7 +160,7 @@
       -webkit-text-fill-color: #e6e6e6; color: #e6e6e6; background: none;
     }
   }
-  .hero-title { display: inline-flex; align-items: center; gap: 16px; margin-top: 30px; opacity: 0; animation: fadeUp 0.9s ease forwards 1.1s; }
+  .hero-title { max-width: 640px; margin: 30px auto 0; font-size: clamp(17px, 2.2vw, 21px); line-height: 1.55; color: #a8a8a8; text-wrap: balance; opacity: 0; animation: fadeUp 0.9s ease forwards 1.1s; }
   .hero-title-line { width: 44px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7)); }
   .hero-title-text { font-size: clamp(17px, 3vw, 25px); font-weight: 400; color: #b9b9b9; letter-spacing: 0.01em; }
   .tw-cursor { display: inline-block; margin-left: 2px; color: #fff; font-weight: 300; animation: twBlink 1s steps(1) infinite; }
@@ -185,7 +186,7 @@
   .skills-intro { max-width: 720px; font-size: 17px; line-height: 1.75; color: #9a9a9a; margin: -6px 0 44px; }
   .skill-group { margin-bottom: 46px; }
   .skill-group:last-child { margin-bottom: 0; }
-  .skill-group-title { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #6f6f6f; margin-bottom: 22px; }
+  .skill-group-title { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #8f8f8f; margin-bottom: 22px; }
   .skill-group-bar { width: 26px; height: 1px; background: rgba(255,255,255,0.55); }
   .skill-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
   @media (min-width: 640px) { .skill-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -200,7 +201,7 @@
   .skill-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 2px; }
   .skill-card-ctx { display: flex; flex-wrap: wrap; gap: 6px; }
   .skill-card-tag { font-size: 11px; font-weight: 400; color: #b4b4b4; background: rgba(255,255,255,0.05); border: 1px solid var(--line); padding: 3px 9px; border-radius: 6px; white-space: nowrap; }
-  .skill-card-cta { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 500; color: #6f6f6f; white-space: nowrap; transition: color 0.25s, gap 0.25s; }
+  .skill-card-cta { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 500; color: #9a9a9a; white-space: nowrap; transition: color 0.25s, gap 0.25s; }
   .skill-card:hover .skill-card-cta { color: #fff; gap: 8px; }
 
   .skill-track { height: 6px; border-radius: 99px; background: rgba(255,255,255,0.08); overflow: hidden; }
@@ -265,6 +266,11 @@
   .social-link:hover { border-color: rgba(255,255,255,0.28); transform: translateX(4px); background: rgba(255,255,255,0.05); }
   .social-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 11px; background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--line); flex-shrink: 0; }
 
+  .contact-mail-link { display: inline-flex; align-items: center; gap: 14px; margin-top: 18px; font-size: clamp(26px, 4.6vw, 46px); font-weight: 400; letter-spacing: -0.02em; color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.25); text-decoration-thickness: 1px; text-underline-offset: 10px; overflow-wrap: anywhere; transition: text-decoration-color 0.2s; }
+  .contact-mail-link:hover { text-decoration-color: #fff; }
+  .contact-mail-link svg { flex-shrink: 0; transition: transform 0.25s; }
+  .contact-mail-link:hover svg { transform: translate(3px, -3px); }
+
   /* ----------------------- FOOTER ----------------------- */
   .footer { padding: 40px 0; border-top: 1px solid var(--line); background: rgba(0,0,0,0.5); }
   .footer-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); color: #9a9a9a; transition: all 0.2s; }
@@ -280,7 +286,7 @@
   .proof-back:hover .proof-back-arrow { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.06); }
 
   .proof-hero { padding: 64px 0 40px; border-bottom: 1px solid var(--line); }
-  .proof-breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 13px; letter-spacing: 0.05em; color: #6f6f6f; text-transform: uppercase; }
+  .proof-breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 13px; letter-spacing: 0.05em; color: #8f8f8f; text-transform: uppercase; }
   .proof-sep { color: #3a3a3a; }
   .proof-title { font-size: clamp(44px, 8vw, 82px); font-weight: 400; letter-spacing: -0.035em; line-height: 1; color: #fff; margin: 18px 0 0; }
   .proof-blurb { font-size: clamp(17px, 2.4vw, 21px); color: #9a9a9a; margin: 18px 0 0; max-width: 640px; }
@@ -313,7 +319,7 @@
   .proof-nav-link { display: flex; flex-direction: column; gap: 5px; padding: 20px 22px; border-radius: 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--line); text-decoration: none; transition: border-color 0.25s, transform 0.25s, background 0.25s; }
   .proof-nav-link:hover { border-color: rgba(255,255,255,0.28); transform: translateY(-3px); background: rgba(255,255,255,0.05); }
   .proof-nav-next { text-align: right; align-items: flex-end; }
-  .proof-nav-dir { font-size: 12.5px; color: #6f6f6f; font-weight: 400; }
+  .proof-nav-dir { font-size: 12.5px; color: #8f8f8f; font-weight: 400; }
   .proof-nav-name { font-size: 19px; font-weight: 500; color: #fff; }
 
   /* ----------------------- REDUCED MOTION ----------------------- */

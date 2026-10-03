@@ -91,21 +91,10 @@ function Hero() {
           </span>
         </h1>
 
-        <div className="hero-title">
-          <span className="hero-title-line"></span>
-          <Typewriter
-            className="hero-title-text"
-            text={[
-              "Étudiant en BUT Informatique",
-              "Rigoureux & autonome",
-              "Curieux & polyvalent",
-            ]}
-            speed={75}
-            deleteSpeed={35}
-            delay={1800}
-            loop={true}
-          />
-        </div>
+        <p className="hero-title">
+          Étudiant en <span className="text-white">3ᵉ année de BUT Informatique</span> à l'IUT de Villetaneuse.
+          Stage en développement web chez ParkHit : <span className="text-white">React, Next.js, TypeScript</span> en production.
+        </p>
 
         <div className="hero-actions">
           <a href="#/competences" className="btn-primary">
@@ -119,11 +108,6 @@ function Hero() {
             <Icon name="download" className="w-4 h-4" />
             Télécharger mon CV
           </a>
-        </div>
-
-        <div className="hero-nav-hint">
-          <span className="hero-nav-hint-line"></span>
-          Naviguez entre les rubriques depuis le menu ci-dessus
         </div>
       </div>
     </section>

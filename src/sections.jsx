@@ -12,11 +12,10 @@ function About() {
         <div className="about-text">
           <Reveal delay={60}>
             <p className="text-xl sm:text-2xl leading-relaxed text-slate-300 tx text-justify">
-              Je suis étudiant en <span className="text-white font-medium">2ᵉ année de BUT Informatique</span> à l'Université Sorbonne Paris Nord.
+              Je suis étudiant en <span className="text-white font-medium">3ᵉ année de BUT Informatique</span> à l'Université Sorbonne Paris Nord.
               Je porte une attention particulière à la rédaction, la maintenance et l'organisation du code,
               tout en étant capable de m'adapter rapidement à de nouveaux outils numériques.
-              Je suis en mesure de travailler en autonomie et de manière rigoureuse,
-              ce qui permet d'assurer un travail sérieux et ponctuel.
+              Je travaille en autonomie, avec rigueur.
             </p>
           </Reveal>
           <Reveal delay={140}>
@@ -35,6 +34,13 @@ function About() {
               équipe et les exigences d'un produit réel.
             </p>
           </Reveal>
+          <Reveal delay={230}>
+            <a href={"uploads/RAPPORT DE STAGE - Boran CAV - Jupiter-1.pdf"} target="_blank" rel="noopener noreferrer"
+               className="inline-flex items-center gap-2 mt-6 mr-6 text-sm text-slate-300 hover:text-white transition-colors duration-200">
+              <Icon name="arrow-up-right" className="w-4 h-4" />
+              Lire mon rapport de stage (PDF)
+            </a>
+          </Reveal>
           <Reveal delay={260}>
             <a
               href="https://www.univ-spn.fr"
@@ -49,8 +55,8 @@ function About() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-10">
             {[
-              { n: "2ᵉ", l: "année de BUT" },
-              { n: "15", l: "technologies" },
+              { n: "3ᵉ", l: "année de BUT" },
+              { n: String((window.SKILLS_DATA || []).length), l: "technologies documentées" },
               { n: "14", l: "projets SAE" },
             ].map((s, i) => (
               <Reveal key={i} delay={180 + i * 80}>
@@ -341,12 +347,19 @@ window.COMP = COMP;
 /* ----------------------------- FORMATION ------------------------------ */
 const EDUCATION = [
   {
+    year: "2026 — 2027",
+    title: "BUT Informatique — 3ᵉ année",
+    place: "IUT de Villetaneuse · Université Sorbonne Paris Nord",
+    desc: "Troisième et dernière année du BUT Informatique.",
+    current: true,
+  },
+  {
     year: "2025 — 2026",
     title: "BUT Informatique — 2ᵉ année",
     place: "IUT de Villetaneuse · Université Sorbonne Paris Nord",
     desc:
       "Approfondissement du développement web (PHP, JavaScript, SQL) avec la SAE collaborative « Gestion de colis », et stage en entreprise chez ParkHit sur une application React / Next.js en production.",
-    current: true,
+    current: false,
   },
   {
     year: "2024 — 2025",
@@ -397,29 +410,10 @@ function Education() {
 
 /* ------------------------------ CONTACT ------------------------------- */
 function Contact() {
-  const [form, setForm] = React.useState({ name: "", email: "", message: "" });
-  const [errors, setErrors] = React.useState({});
-  const [sent, setSent] = React.useState(false);
-
-  const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-
-  const submit = (e) => {
-    e.preventDefault();
-    const errs = {};
-    if (!form.name.trim()) errs.name = "Votre nom est requis.";
-    if (!form.email.trim()) errs.email = "Votre email est requis.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = "Email invalide.";
-    if (!form.message.trim()) errs.message = "Écrivez un petit message.";
-    setErrors(errs);
-    if (Object.keys(errs).length === 0) {
-      setSent(true);
-    }
-  };
-
   const socials = [
     { name: "LinkedIn", handle: "boran-cav", icon: "linkedin", href: "https://www.linkedin.com/in/boran-cav-3971a6333/" },
     { name: "GitHub", handle: "BoranCAV", icon: "github", href: "https://github.com/BoranCAV" },
-    { name: "Email", handle: "cav.boran@gmail.com", icon: "mail", href: "mailto:cav.boran@gmail.com" },
+    { name: "Rapport de stage", handle: "ParkHit · PDF", icon: "arrow-up-right", href: "uploads/RAPPORT DE STAGE - Boran CAV - Jupiter-1.pdf" },
   ];
 
   return (
@@ -427,50 +421,30 @@ function Contact() {
       <div className="wrap">
         <SectionTitle index="05" eyebrow="Contact" title="Travaillons ensemble" />
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-start">
-          {/* form */}
           <Reveal>
-            {sent ? (
-              <div className="form-success">
-                <span className="success-check"><Icon name="check" className="w-7 h-7" /></span>
-                <h3 className="font-display text-2xl font-bold text-white mt-4">Merci {form.name.split(" ")[0]} !</h3>
-                <p className="text-slate-400 mt-2">
-                  Votre message a bien été pris en compte. Je vous répondrai dès que possible.
-                </p>
-                <button className="btn-ghost mt-6" onClick={() => { setSent(false); setForm({ name: "", email: "", message: "" }); }}>
-                  Envoyer un autre message
-                </button>
+            <div className="contact-mail">
+              <p className="text-slate-400 leading-relaxed text-lg">
+                Une question, une opportunité ou simplement envie d'échanger ? Le plus simple est de m'écrire :
+              </p>
+              <a href="mailto:cav.boran@gmail.com" className="contact-mail-link font-display">
+                cav.boran@gmail.com
+                <Icon name="arrow-up-right" className="w-7 h-7" />
+              </a>
+              <div className="flex flex-wrap gap-3 mt-8">
+                <a href="mailto:cav.boran@gmail.com" className="btn-primary">
+                  <Icon name="mail" className="w-4 h-4" />
+                  Écrire un e-mail
+                </a>
+                <a href="uploads/CV-Boran-CAV.pdf" download className="btn-ghost">
+                  <Icon name="download" className="w-4 h-4" />
+                  Télécharger mon CV
+                </a>
               </div>
-            ) : (
-              <form onSubmit={submit} noValidate className="flex flex-col gap-5">
-                <div className="field">
-                  <label htmlFor="name">Nom</label>
-                  <input id="name" type="text" value={form.name} onChange={update("name")} placeholder="Votre nom" className={errors.name ? "has-error" : ""} />
-                  {errors.name && <span className="err">{errors.name}</span>}
-                </div>
-                <div className="field">
-                  <label htmlFor="email">Email</label>
-                  <input id="email" type="email" value={form.email} onChange={update("email")} placeholder="vous@exemple.com" className={errors.email ? "has-error" : ""} />
-                  {errors.email && <span className="err">{errors.email}</span>}
-                </div>
-                <div className="field">
-                  <label htmlFor="message">Message</label>
-                  <textarea id="message" rows="5" value={form.message} onChange={update("message")} placeholder="Votre message..." className={errors.message ? "has-error" : ""}></textarea>
-                  {errors.message && <span className="err">{errors.message}</span>}
-                </div>
-                <button type="submit" className="btn-primary self-start">
-                  Envoyer le message
-                  <Icon name="arrow-up-right" className="w-4 h-4" />
-                </button>
-              </form>
-            )}
+            </div>
           </Reveal>
 
-          {/* socials */}
           <Reveal delay={120} from="right">
             <div className="flex flex-col gap-4">
-              <p className="text-slate-400 leading-relaxed mb-1">
-                Une question, une opportunité de stage ou simplement envie d'échanger ? Retrouvez-moi ici :
-              </p>
               {socials.map((s) => (
                 <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" className="social-link group">
                   <span className="social-icon"><Icon name={s.icon} className="w-5 h-5" /></span>
@@ -478,13 +452,9 @@ function Contact() {
                     <span className="block text-white font-medium">{s.name}</span>
                     <span className="block text-sm text-slate-400">{s.handle}</span>
                   </span>
-                  <Icon name="arrow-up-right" className="w-4 h-4 text-slate-500 group-hover:text-accent transition-colors" />
+                  <Icon name="arrow-up-right" className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
                 </a>
               ))}
-              <a href="uploads/CV-Boran-CAV.pdf" download className="btn-primary self-start mt-2">
-                <Icon name="download" className="w-4 h-4" />
-                Télécharger mon CV
-              </a>
             </div>
           </Reveal>
         </div>
